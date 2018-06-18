@@ -1,4 +1,4 @@
-$(window).load(function(){
+$(document).ready(function(){
     $('#menu-add-page').change(function(){
         key_id = $(this).data('keyId');
         menu_id = $(this).val();
