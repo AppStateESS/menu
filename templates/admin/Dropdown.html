@@ -1,5 +1,16 @@
 <div class="form-group">
-  <h4>Image</h4>
+  <label for="menu-associated-page">Page</label>
+  <select name="assoc_key" id="menu-associated-page" class="form-control">
+  </select>
+  <p style="font-style:italic"><small>* Pages already associated to a menu may not be selected.</small></p>
+</div>
+<div class="form-group">
+  <label for="menu-associated-url">URL</label>
+  <input type="text" name="assoc_url" id="menu-associated-url" class="form-control" placeholder="http://address.com" />
+  <p style="font-style:italic"><small>* Using a URL prevents display of drop down and side menu.</small></p>
+</div>
+<h4>Image</h4>
+<div class="form-group">
   <label for="menu-associated-image">Upload</label>
   <input type="file" name="assoc_image" id="menu-associated-image" class="form-control" />
   <?php if(!empty($carousel)): ?>
@@ -13,6 +24,6 @@
   <div id='assoc-image-thumbnail' style='margin: 6px 0px;'></div>
 </div>
 <div id="create-link" class="d-none">
-  <div class="alert alert-warning">This menu has a link associated with it from the Category View. Dropdown will not show this link unless you transfer it.</div>
+  <div class="alert alert-warning">This menu has an associated page. Since it has drop down links, the page link will not be accessible. It is recommended that you transfer the associated link into the menu or remove the association above.</div>
   <button type="button" class="btn btn-success btn-block" id="transfer-link">Transfer this link</button>
 </div>

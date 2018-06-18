@@ -477,6 +477,7 @@ class Menu {
             $template->setModuleTemplate('menu',
                     'category_view/associated_menu.html');
         } else {
+            $line['assoc_url'] = $menu->getAssocUrl();
             $line['links'] = $menu->displayLinks();
             $template->setModuleTemplate('menu',
                     'category_view/dropdown_menu.html');

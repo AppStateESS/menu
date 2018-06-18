@@ -863,6 +863,8 @@ class Menu_Admin
             // for display, use the admin template
             $first_menu->template = 'admin';
             $tpl['first_menu'] = $first_menu->view(true);
+            $hasLinks = empty($tpl['first_menu']) ? 'false' : 'true';
+            
             $first_menu_pin_all = $first_menu->pin_all;
             $first_menu_id = $first_menu->id;
         } else {
@@ -890,10 +892,9 @@ class Menu_Admin
             $vars['pin_all'] = 'Shown on all pages';
             $vars['pin_some'] = 'Shown on some pages';
         }
-
         $jvar = json_encode($vars);
         $script = <<<EOF
-<script type="text/javascript">var translate = $jvar; var fmp=$first_menu_pin_all;</script>
+<script type="text/javascript">let hasLinks = $hasLinks; var translate = $jvar; var fmp=$first_menu_pin_all;</script>
 EOF;
         \Layout::addJSHeader($script);
         \Layout::addJSHeader('<script type="text/javascript" src="' . PHPWS_SOURCE_HTTP . 'mod/menu/javascript/administrate/script.js"></script>');

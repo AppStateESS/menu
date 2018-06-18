@@ -1,5 +1,4 @@
 var menu_admin = new MenuAdmin;
-
 // assigned by Menu_Admin::menuList
 $(document).ready(function () {
   menu_admin.menu_id = translate.first_menu_id;
@@ -203,8 +202,6 @@ function MenuAdmin() {
             module: 'menu',
             command: 'delete_link',
             link_id: t.link_id
-          }, function (data) {
-            //console.log(data);
           }).always(function () {
             t.link_modal.modal('hide');
             t.populateMenuEdit();
@@ -244,10 +241,16 @@ function MenuAdmin() {
             }
             if (data.assoc_key === '0') {
               t.input.setAssocUrl(data.assoc_url);
-            } else {
+            }
+            
+            if (hasLinks) {
               $('#create-link').removeClass('d-none');
               $('#create-link').addClass('d-block');
+            } else {
+              $('#create-link').removeClass('d-block');
+              $('#create-link').addClass('d-none');
             }
+
           }, 'json');
           t.menu_modal.modal('show');
         });
@@ -316,8 +319,6 @@ function MenuAdmin() {
             title: t.input.title.val(),
             url: t.input.url.val(),
             key_id: t.key_id
-          }, function (data) {
-            //console.log(data);
           }).always(function () {
             t.link_modal.modal('hide');
             t.populateMenuEdit();
@@ -341,8 +342,6 @@ function MenuAdmin() {
           command: 'pin_all',
           menu_id: t.menu_id,
           pin_all: change_pin_all
-        }, function (data) {
-          //console.log(data);
         }).always(function () {
           t.pin_all = change_pin_all;
           t.populateMenuEdit();
@@ -511,7 +510,6 @@ function MenuAdmin() {
       t.url = link.attr('href');
       t.loadMoveLinkOptions();
       t.initFormButtons();
-      console.log(t.url);
       $('.current-association a').text(t.url);
       $('.current-association a').attr('href', t.url);
       if (t.key_id > 0) {
@@ -608,6 +606,7 @@ function MenuAdmin() {
       command: 'adminlinks',
       menu_id: t.menu_id
     }, function (data) {
+      hasLinks = data.html ? true : false
       $('#menu-admin-area').html(data.html);
       if (data.pin_all == '1') {
         t.pin_all = 1;
@@ -667,8 +666,6 @@ function MenuAdmin() {
       move_id: moved_row_id,
       next_id: next_row_id,
       prev_id: prev_row_id
-    }, function (data) {
-      //console.log(data);
     }).always(function () {
       t.populateMenuEdit();
     });
