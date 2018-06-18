@@ -42,6 +42,10 @@ class Menu_Admin
             case 'key_select':
                 $this->keySelect();
                 exit();
+                
+            case 'moveCategoryLink':
+                $this->moveCategoryLink($request->pullGetInteger('menu_id'));
+                exit();
 
             case 'post_link':
                 $this->postLink($request);
@@ -184,6 +188,29 @@ class Menu_Admin
             }
         }
     }
+    
+    private function moveCategoryLink($menu_id)
+    {
+        $menu = new Menu_Item($menu_id);
+        $assoc_key = $menu->assoc_key;
+        // there isn't a key associated to this menu, so quit
+        
+        if (!$assoc_key) {
+            return;
+        }
+        $key = new \Canopy\Key($assoc_key);
+        $menu_link = new Menu_Link;
+        $menu_link->menu_id = $menu_id;
+        $menu_link->key_id = $key->id;
+        $menu_link->title = $key->title;
+        $menu_link->url = $key->url;
+        $menu_link->save();
+        
+        $menu->assoc_key = 0;
+        $menu->assoc_url = null;
+        $menu->save(false);
+    }
+    
 
     private function getKeyword($url)
     {
@@ -808,6 +835,7 @@ class Menu_Admin
 
     private function menuList()
     {
+        \Layout::hideDefault(true);
         \Layout::addStyle('menu', 'admin.css');
         javascript('jquery_ui');
 

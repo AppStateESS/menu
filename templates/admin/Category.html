@@ -1,0 +1,27 @@
+<fieldset><legend>Association</legend>
+  <div class="form-group">
+    <label for="menu-associated-page">Page</label>
+    <select name="assoc_key" id="menu-associated-page" class="form-control">
+    </select>
+    <p style="font-style:italic"><small>* Pages already associated to a menu may not be selected.</small></p>
+  </div>
+  <div class="form-group">
+    <label for="menu-associated-url">URL</label>
+    <input type="text" name="assoc_url" id="menu-associated-url" class="form-control" placeholder="http://address.com" />
+    <p style="font-style:italic"><small>* Using a URL prevents display of drop down and side menu.</small></p>
+  </div>
+  <div class="form-group">
+    <h4>Image</h4>
+    <label for="menu-associated-image">Upload</label>
+    <input type="file" name="assoc_image" id="menu-associated-image" class="form-control" />
+    <?php if(!empty($carousel)): ?>
+    <p style='text-align:center'>or</p>
+    <label for="carousel-slide">Copy Carousel slide</label>
+    <select class="form-control" id="carousel-slide" name="carousel_slide">
+      <option></option>
+      <?= $carousel?>
+    </select>
+    <?php endif; ?>
+    <div id='assoc-image-thumbnail' style='margin: 6px 0px;'></div>
+  </div>
+</fieldset>

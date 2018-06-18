@@ -1,0 +1,18 @@
+<div class="form-group">
+  <h4>Image</h4>
+  <label for="menu-associated-image">Upload</label>
+  <input type="file" name="assoc_image" id="menu-associated-image" class="form-control" />
+  <?php if(!empty($carousel)): ?>
+  <p style='text-align:center'>or</p>
+  <label for="carousel-slide">Copy Carousel slide</label>
+  <select class="form-control" id="carousel-slide" name="carousel_slide">
+    <option></option>
+    <?= $carousel?>
+  </select>
+  <?php endif; ?>
+  <div id='assoc-image-thumbnail' style='margin: 6px 0px;'></div>
+</div>
+<div id="create-link" class="d-none">
+  <div class="alert alert-warning">This menu has a link associated with it from the Category View. Dropdown will not show this link unless you transfer it.</div>
+  <button type="button" class="btn btn-success btn-block" id="transfer-link">Transfer this link</button>
+</div>
