@@ -213,9 +213,9 @@ class Menu_Item {
         if (empty($this->assoc_image)) {
             return null;
         }
-        return "<img id=\"menu-associated-image\" data-src=\">768:$this->assoc_image\"
-        style=\"display:none;\" onload=\"this.style.display='inline';this.style.opacity='1';\" />
-        <noscript><img id=\"menu-associated-image\" src=\">768:$this->assoc_image\" \></noscript>";
+        return <<<EOF
+<img id="menu-associated-image" src="{$this->assoc_image}" />
+EOF;
     }
 
     public function getAssocImageThumbnail()
