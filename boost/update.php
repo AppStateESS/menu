@@ -21,6 +21,13 @@ function menu_update(&$content, $currentVersion)
 + Canopy Version
 </pre>
 EOF;
+        case version_compare($currentVersion, '2.2.1', '<'):
+            $content[] = <<<EOF
+<pre>2.2.0 changes
+-------------------
++ Fixed associated image.
+</pre>
+EOF;
     }
     return true;
 }
