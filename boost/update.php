@@ -23,7 +23,7 @@ function menu_update(&$content, $currentVersion)
 EOF;
         case version_compare($currentVersion, '2.2.1', '<'):
             $content[] = <<<EOF
-<pre>2.2.0 changes
+<pre>2.2.1 changes
 -------------------
 + Fixed associated image.
 </pre>
