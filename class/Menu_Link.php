@@ -258,11 +258,11 @@ class Menu_Link {
         }
     }
 
-    public function view($level = '1', $admin = false)
+    public function view($level = '1', $admin = false, $active=false)
     {
         \PHPWS_Core::requireConfig('menu');
         static $current_parent = array();
-
+        $childrenActive = false;
         $current_link = false;
         $current_key = \Canopy\Key::getCurrent();
         if (!empty($current_key)) {
@@ -272,20 +272,28 @@ class Menu_Link {
 
             if ((!$current_key->isDummy() && $current_key->id == $this->key_id) || ($current_key->url == $this->url)) {
                 $current_link = true;
+                $childrenActive = true;
                 $current_parent[] = $this->id;
-                $template['CURRENT_LINK'] = MENU_CURRENT_LINK_STYLE;
-                $template['ACTIVE'] = 'active'; // booststrap theme
+                $template['CURRENT_LINK'] = 'current';
+                $template['ACTIVE'] = 'active';
             }
         }
         if (!isset($template['CURRENT_LINK']) && $this->isCurrentUrl()) {
+            $childrenActive = true;
             $current_link = true;
             $current_parent[] = $this->id;
-            $template['CURRENT_LINK'] = MENU_CURRENT_LINK_STYLE;
-            $template['ACTIVE'] = 'active'; // booststrap theme
+            $template['CURRENT_LINK'] = 'current';
+            $template['ACTIVE'] = 'active';
+        }
+        
+        if ($active) {
+            $template['ACTIVE'] = 'active';
         }
 
         if ($this->childIsCurrentUrl()) {
             $current_parent[] = $this->id;
+            $template['ACTIVE'] = 'active';
+            $childrenActive = true;
         }
 
         if ($this->_menu->_show_all || $current_link || $this->parent == 0 ||
@@ -299,7 +307,7 @@ class Menu_Link {
             if (!empty($this->_children)) {
                 foreach ($this->_children as $kid) {
                     $kid->_menu = & $this->_menu;
-                    if ($kid_link = $kid->view($level + 1, $admin)) {
+                    if ($kid_link = $kid->view($level + 1, $admin, $childrenActive)) {
                         $sublinks[] = $kid_link;
                     }
                 }

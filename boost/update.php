@@ -28,6 +28,13 @@ EOF;
 + Fixed associated image.
 </pre>
 EOF;
+        case version_compare($currentVersion, '2.2.2', '<'):
+            $content[] = <<<EOF
+<pre>2.2.2 changes
+-------------------
++ Added new classes to sublinks to help with menu styling.
+</pre>
+EOF;
     }
     return true;
 }
