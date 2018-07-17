@@ -35,6 +35,13 @@ EOF;
 + Added new classes to sublinks to help with menu styling.
 </pre>
 EOF;
+        case version_compare($currentVersion, '2.2.3', '<'):
+            $content[] = <<<EOF
+<pre>2.2.3 changes
+-------------------
++ Fixed error when all menus removed.
+</pre>
+EOF;
     }
     return true;
 }

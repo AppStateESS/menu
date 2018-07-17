@@ -1,12 +1,13 @@
 <button class="btn btn-success" id="create-menu" style="margin-bottom:1em">Create menu</button>
 <?php if (\Current_User::isDeity()): ?><a href="<?= $reset_menu_link?>" class="btn btn-warning" id="reset-menu" style="margin-bottom:1em">Reset menu and link order</a><?php endif; ?>
 <div class="clearfix"></div>
+<?php if (!empty($menus)): ?>
 <div id="menu-list">
   <div id="menu-select">
     <ul>
-      <?php if(!empty($menus)): foreach($menus as $m): extract($m);?>
+      <?php foreach($menus as $m): extract($m);?>
       <li data-menu-id="<?= $id?>"><a href="javascript:void(0)" class="btn btn-default menu-edit <?= $active?>" data-menu-id="<?= $id?>"><?= $title?></a></li>
-      <?php endforeach; endif;?>
+      <?php endforeach;?>
     </ul>
   </div>
 </div>
@@ -20,6 +21,7 @@
     <?= $first_menu?>
   </div>
 </div>
+<?php endif;?>
 <div class="modal fade" id="link-edit-modal">
   <div class="modal-dialog">
     <div class="modal-content">

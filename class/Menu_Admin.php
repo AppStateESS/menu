@@ -848,6 +848,7 @@ class Menu_Admin
         $db->addOrder('queue');
         $result = $db->getObjects('Menu_Item');
         $first_menu = null;
+        $hasLinks = 'false';
         if (!empty($result)) {
             foreach ($result as $menu) {
                 $menu->_show_all = true;
