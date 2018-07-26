@@ -145,7 +145,7 @@ class Menu_Link {
         $icon = null;
         if (\PHPWS_Settings::get('menu', 'link_icons')) {
             if (preg_match('/^https?:/', $this->url)) {
-                $icon = '<i class="fa fa-external-link fa-fw" style="font-size : 80%"></i>';
+                $icon = '<i class="fas fa-external-link-alt fa-fw" style="font-size : 80%"></i>';
             } elseif (preg_match('/(\.pdf|filecabinet\/\d+)$/', $this->url)) {
                 $icon = '<i class="fa fa-file-pdf-o fa-fw" style="font-size : 80%"></i>';
             }
