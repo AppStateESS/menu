@@ -42,7 +42,6 @@ EOF;
 + Fixed error when all menus removed.
 </pre>
 EOF;
-            EOF;
         case version_compare($currentVersion, '2.2.4', '<'):
             $content[] = <<<EOF
 <pre>2.2.4 changes
