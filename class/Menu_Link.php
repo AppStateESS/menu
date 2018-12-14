@@ -147,7 +147,7 @@ class Menu_Link {
             if (preg_match('/^https?:/', $this->url)) {
                 $icon = '<i class="fas fa-external-link-alt fa-fw" style="font-size : 80%"></i>';
             } elseif (preg_match('/(\.pdf|filecabinet\/\d+)$/', $this->url)) {
-                $icon = '<i class="fa fa-file-pdf-o fa-fw" style="font-size : 80%"></i>';
+                $icon = '<i class="far fa-file-pdf fa-fw" style="font-size : 80%"></i>';
             }
         }
         
