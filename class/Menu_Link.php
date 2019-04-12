@@ -244,8 +244,10 @@ class Menu_Link {
         }
 
         $key = \Canopy\Key::getCurrent();
-        if ($key->id == $this->key_id) {
-            return true;
+        if ($key) {
+            if ($key->id == $this->key_id) {
+                return true;
+            }
         }
         
         if (!$current_url) {
