@@ -243,6 +243,11 @@ class Menu_Link {
             return false;
         }
 
+        $key = \Canopy\Key::getCurrent();
+        if ($key->id == $this->key_id) {
+            return true;
+        }
+        
         if (!$current_url) {
             $current_url = preg_quote(\phpws\PHPWS_Core::getCurrentUrl(true, false));
         }
