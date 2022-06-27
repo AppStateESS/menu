@@ -1,8 +1,10 @@
-<div id="menu-site-map"><!-- BEGIN site-map -->
-<div class="box">
-<div class="box-title">
-<h2>{TITLE}</h2>
+<h2><a href="./menu?site_map=all">Site map</a></h2>
+<div id="menu-site-map">
+  <ul>
+    <!-- BEGIN site-map -->
+    <li class="site-map">{TITLE}
+      <div>{CONTENT}</div>
+    </li>
+    <!-- END site-map -->
+  </ul>
 </div>
-<div class="box-content">{CONTENT}</div>
-</div>
-<!-- END site-map --></div>

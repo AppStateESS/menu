@@ -8,8 +8,9 @@
  */
 \phpws\PHPWS_Core::initModClass('menu', 'Menu_Item.php');
 
-class Menu {
-    
+class Menu
+{
+
     static $disableMenu = false;
 
     public static function admin()
@@ -57,15 +58,15 @@ class Menu {
 
         // Default link. Takes user to menu admin screen
         MiniAdmin::add('menu',
-                \PHPWS_Text::secureLink('<span class="fa fa-cog"></span> Administrate menus',
-                        'menu', array('command' => 'list')));
+            \PHPWS_Text::secureLink('<span class="fa fa-cog"></span> Administrate menus',
+                'menu', array('command' => 'list')));
 
         $key = \Canopy\Key::getCurrent();
         $link_list = self::getLinkList();
 
         if ($key && !$key->isDummy(true)) {
             \Layout::addJSHeader('<script type="text/javascript" src="' .
-                    PHPWS_SOURCE_HTTP . 'mod/menu/javascript/administrate/minilink.js"></script>');
+                PHPWS_SOURCE_HTTP . 'mod/menu/javascript/administrate/minilink.js"></script>');
             $found = false;
             $used_menus = array();
             foreach ($link_list as $link) {
@@ -75,10 +76,10 @@ class Menu {
                     if (!in_array($menu_id, $used_menus)) {
                         $used_menus[] = $menu_id;
                         MiniAdmin::add('menu',
-                                '<a href="javascript:void(0)" data-key-id="' . $key->id
-                                . '" data-menu-id="' . $menu_id
-                                . '" id="menu-remove-page"><span class="fa fa-times"></span> ' . \Canopy\Translation::t('Remove from %s',
-                                        $menu_title) . '</a>');
+                            '<a href="javascript:void(0)" data-key-id="' . $key->id
+                            . '" data-menu-id="' . $menu_id
+                            . '" id="menu-remove-page"><span class="fa fa-times"></span> ' . \Canopy\Translation::t('Remove from %s',
+                                $menu_title) . '</a>');
                         $found = true;
                     }
                 }
@@ -97,7 +98,7 @@ class Menu {
         $menus = self::getMenuListing();
 
         $choice[] = '<div class="input-group-sm" style="margin-bottom : 5px"><select class="form-control" name="menu_id" id="menu-add-page" data-key-id="'
-                . $key->id . '">';
+            . $key->id . '">';
         $choice[] = '<option value="0" disabled="disabled" selected="selected"><i class="fa fa-caret-down"></i>Add link to menu</option>';
         foreach ($menus as $menu) {
             $choice[] = '<option value="' . $menu['id'] . '">' . $menu['title'] . '</option>';
@@ -122,7 +123,7 @@ class Menu {
         }
 
         $choice[] = '<div class="input-group-sm" style="margin-bottom : 5px"><select class="form-control" name="menu_id" id="menu-unpin-page" data-key-id="'
-                . $key->id . '">';
+            . $key->id . '">';
         $choice[] = '<option value="0" disabled="disabled" selected="selected"><i class="fa fa-caret-down"></i>Remove menu</option>';
         $menu_found = false;
         foreach ($menus as $menu) {
@@ -155,7 +156,7 @@ class Menu {
         }
 
         $choice[] = '<div class="input-group-sm" style="margin-bottom : 5px"><select class="form-control" name="menu_id" id="menu-pin-page" data-key-id="'
-                . $key->id . '">';
+            . $key->id . '">';
         $choice[] = '<option value="0" disabled="disabled" selected="selected"><i class="fa fa-caret-down"></i>Show menu here</option>';
         $menu_found = false;
         foreach ($menus as $menu) {
@@ -189,8 +190,8 @@ class Menu {
         $menu_links->addFieldConditional('key_id', 0, '!=');
         $menus = $db->addTable('menus');
         $db->joinResources($menu_links, $menus,
-                $db->createConditional($menu_links->getField('menu_id'),
-                        $menus->getField('id'), '='));
+            $db->createConditional($menu_links->getField('menu_id'),
+                $menus->getField('id'), '='));
         $menu_links->addField('id');
         $menu_links->addField('key_id');
         $menu_links->addField('menu_id');
@@ -270,20 +271,24 @@ class Menu {
                     }
                     $content = array();
                     if (!empty($result)) {
+                        $site['TITLE'] = $menu->getTitle();
                         Menu::walkLinks($result, $content);
+                    } else {
+                        $site['TITLE'] = '<a href="' . $menu->assoc_url . '">' . $menu->title . '</a>';
                     }
-                    $site['TITLE'] = $menu->getTitle() . ' - Site map';
                     $site['CONTENT'] = implode('', $content);
                     $tpl['site-map'][] = $site;
                 }
             } else {
-                $tpl['TITLE'] = $menu->getTitle() . ' - ' . dgettext('menu',
-                                'Site map');
-                $tpl['CONTENT'] = dgettext('menu',
-                        'Sorry, no menus have been created');
+                $tpl['TITLE'] = $menu->getTitle();
+                $tpl['CONTENT'] = 'Sorry, no menus have been created';
             }
         } else {
-            $menu = new Menu_Item((int) $_GET['site_map']);
+            try {
+                $menu = new Menu_Item((int) $_GET['site_map']);
+            } catch (Exception $ex) {
+                \phpws\PHPWS_Core::errorPage('404');
+            }
             if (empty($menu->title)) {
                 \phpws\PHPWS_Core::errorPage('404');
             }
@@ -297,8 +302,7 @@ class Menu {
             if (!empty($result)) {
                 Menu::walkLinks($result, $content);
             }
-            $tpl['TITLE'] = $menu->getTitle() . ' - ' . dgettext('menu',
-                            'Site map');
+            $tpl['TITLE'] = $menu->getTitle();
             $tpl['CONTENT'] = implode('', $content);
         }
         Layout::add(PHPWS_Template::process($tpl, 'menu', 'site_map.tpl'));
@@ -307,7 +311,7 @@ class Menu {
     public static function walkLinks($links, &$content)
     {
         $admin = \Current_User::allow('menu');
-        $content[] = '<ol>';
+        $content[] = '<ul>';
         foreach ($links as $link) {
             $content[] = '<li>';
             $content[] = $link->getAnchorTag($admin);
@@ -316,7 +320,7 @@ class Menu {
             }
             $content[] = '</li>';
         }
-        $content[] = '</ol>';
+        $content[] = '</ul>';
     }
 
     public function quickLink($title, $url)
@@ -395,7 +399,7 @@ class Menu {
         $menus = $db2->select();
         return $menus;
     }
-    
+
     /**
      * Disables the menu for one page load. Useful to get back some screen
      * space.
@@ -404,13 +408,13 @@ class Menu {
     {
         self::$disableMenu = true;
     }
-    
+
     public static function enableMenu()
     {
         self::$disableMenu = true;
     }
 
-    public static function categoryView($dropdownOnly=false)
+    public static function categoryView($dropdownOnly = false)
     {
         $active_menu = self::getCurrentActiveMenu();
         if ($active_menu == 0) {
@@ -424,8 +428,8 @@ class Menu {
         $k = $db->addTable('phpws_key');
         $k->addField('url');
         $db->joinResources($m, $k,
-                $db->createConditional($m->getField('assoc_key'),
-                        $k->getField('id'), '='), 'left');
+            $db->createConditional($m->getField('assoc_key'),
+                $k->getField('id'), '='), 'left');
         $m->addOrderBy($m->getField('queue'));
 
         $key = \Canopy\Key::getCurrent();
@@ -475,12 +479,12 @@ class Menu {
         if (!$dropdownOnly && ($menu->assoc_key || !empty($menu->assoc_url))) {
             $line['assoc_url'] = $menu->getAssocUrl();
             $template->setModuleTemplate('menu',
-                    'category_view/associated_menu.html');
+                'category_view/associated_menu.html');
         } else {
             $line['assoc_url'] = $menu->getAssocUrl();
             $line['links'] = $menu->displayLinks();
             $template->setModuleTemplate('menu',
-                    'category_view/dropdown_menu.html');
+                'category_view/dropdown_menu.html');
         }
         $template->addVariables($line);
         return $template->get();

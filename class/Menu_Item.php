@@ -9,7 +9,8 @@
 
 define('MENU_MISSING_TPL', -2);
 
-class Menu_Item {
+class Menu_Item
+{
 
     public $id = 0;
     public $key_id = 0;
@@ -59,11 +60,14 @@ class Menu_Item {
         $k = $db->addTable('phpws_key');
         $k->addField('url');
         $db->joinResources($m, $k,
-                $db->createConditional($m->getField('assoc_key'),
-                        $k->getField('id'), '='), 'left');
+            $db->createConditional($m->getField('assoc_key'),
+                $k->getField('id'), '='), 'left');
         $m->addFieldConditional('id', $this->id);
 
         $result = $db->selectOneRow();
+        if (!$result) {
+            throw new \Exception('Menu not found');
+        }
         $this->id = $result['id'];
         $this->key_id = $result['key_id'];
         $this->title = $result['title'];
@@ -172,7 +176,7 @@ class Menu_Item {
             if (PHPWS_Error::isError($result)) {
                 PHPWS_Error::log($result);
                 return array(dgettext('menu',
-                            'Unable to save menu. Please check error logs.'));
+                        'Unable to save menu. Please check error logs.'));
             }
             return TRUE;
         }
