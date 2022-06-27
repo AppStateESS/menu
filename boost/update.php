@@ -13,7 +13,7 @@ function menu_update(&$content, $currentVersion)
     switch ($currentVersion) {
         case version_compare($currentVersion, '2.1.0', '<'):
             $content[] = 'Versions prior to 2.1.0 need updating in phpwebsite.';
-            
+
         case version_compare($currentVersion, '2.2.0', '<'):
             $content[] = <<<EOF
 <pre>2.2.0 changes
@@ -47,6 +47,13 @@ EOF;
 <pre>2.2.4 changes
 -------------------
 + Fixed Font Awesome external link icon.
+</pre>
+EOF;
+        case version_compare($currentVersion, '2.2.5', '<'):
+            $content[] = <<<EOF
+<pre>2.2.5 changes
+-------------------
++ Updates Site Map page.
 </pre>
 EOF;
     }
