@@ -1,12 +1,12 @@
 <li class="<?php echo $active ?'active':null?>">
   <?php if (!empty($links)): ?>
-  <a href="javascript:void(0)"><?php echo $title?></a>
+  <a href="javascript:void(0)" role="button" aria-expanded="false"><?php echo $title?></a>
   <?php elseif(!empty($assoc_url)): ?>
   <a href="<?=$assoc_url?>"><?php echo $title?></a>
   <?php endif; ?>
   <?php if (!empty($links)): ?>
-    <ul class="menu-top-links">
-      <?php echo $links?>
-    </ul>
+  <ul class="menu-top-links">
+    <?php echo $links?>
+  </ul>
   <?php endif;?>
 </li>
