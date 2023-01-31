@@ -5,7 +5,7 @@
  * @version $Id$
  */
 $proper_name = 'Menu';
-$version = '2.2.5';
+$version = '2.2.6';
 $register = false;
 $import_sql = true;
 $about = true;

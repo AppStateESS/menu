@@ -56,6 +56,13 @@ EOF;
 + Updates Site Map page.
 </pre>
 EOF;
+        case version_compare($currentVersion, '2.2.6', '<'):
+            $content[] = <<<EOF
+<pre>2.2.6 changes
+-------------------
++ Adds accessibility params to menu.
+</pre>
+EOF;
     }
     return true;
 }
